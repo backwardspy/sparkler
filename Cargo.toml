@@ -1,0 +1,35 @@
+[package]
+name = "sparkler"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "sparkler-api"
+path = "src/bin/api.rs"
+
+[[bin]]
+name = "sparkle"
+path = "src/bin/cli.rs"
+
+[lints]
+clippy.all = "warn"
+clippy.pedantic = "warn"
+clippy.nursery = "warn"
+clippy.cast_possible_wrap = "allow"
+clippy.cast_sign_loss = "allow"
+clippy.unwrap_used = "deny"
+
+[dependencies]
+anyhow = "1.0.80"
+axum = "0.7.4"
+clap = { version = "4.5.1", features = ["derive"] }
+image = "0.24.9"
+imageproc = "0.23.0"
+rusttype = "0.9.3"
+sha2 = "0.10.8"
+textwrap = "0.16.1"
+thiserror = "1.0.57"
+tokio = { version = "1.36.0", features = ["macros", "rt-multi-thread"] }
+tower-http = { version = "0.5.2", features = ["trace"] }
+tracing = "0.1.40"
+tracing-subscriber = "0.3.18"
