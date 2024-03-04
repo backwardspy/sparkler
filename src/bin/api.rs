@@ -46,6 +46,7 @@ async fn main() -> anyhow::Result<()> {
 
     let app = Router::new()
         .route("/", get(index))
+        .route("/i.gif", get(index))
         .route("/favicon.ico", get(favicon))
         .layer(
             TraceLayer::new_for_http()
@@ -56,7 +57,11 @@ async fn main() -> anyhow::Result<()> {
     let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await?;
     let addr = listener.local_addr()?;
     info!(?addr, "listening");
-    axum::serve(listener, app).await?;
+    axum::serve(listener, app)
+        .with_graceful_shutdown(async {
+            tokio::signal::ctrl_c().await.ok();
+        })
+        .await?;
 
     Ok(())
 }
